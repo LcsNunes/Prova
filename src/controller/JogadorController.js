@@ -5,10 +5,10 @@ class JogadorController {
             const { nome,posicao,idade,nacionalidade } = request.body
             const jogador = await prisma.jogador.create({
                 data: {
-                    nome,
-                    posicao,
-                    idade,
-                    nacionalidade
+                    nome: nome,
+                    posicao: posicao,
+                    idade: idade,
+                    nacionalidade: nacionalidade
                 }
             })
             response.json(jogador)
@@ -31,7 +31,34 @@ class JogadorController {
             return response.status(409).send()
         }
     }
-}  
+
+    async MostrarTodos(request, response) {
+        try {
+            const jogador = await prisma.jogador.MostrarTodos({})
+            response.json(jogador)
+        } catch {
+            return response.status(409).send()
+        }
+    }
+
+    async delete(request, response) {
+        try {
+            const { id } = request.body
+            const jogador = await prisma.jogador.delete({
+                where: {
+                    id: id
+                }
+            })
+            response.json(jogador)
+        } catch {
+            return response.status(409).send()
+
+        }
+    }
+}
+
+
+
 
 
 
