@@ -3,7 +3,7 @@ class TimesController {
     async create(request, response) {
         try {
             const { nome,anoDeFundacao, pais, tecnico } = request.body
-            const jogador = await prisma.jogador.create({
+            const times = await prisma.times.create({
                 data: {
                     
                 nome,
@@ -42,8 +42,8 @@ class TimesController {
 
     async MostrarTodos(request, response) {
         try {
-            const jogador = await prisma.jogador.MostrarTodos({})
-            response.json(jogador)
+            const times = await prisma.times.MostrarTodos({})
+            response.json(times)
         } catch {
             return response.status(409).send()
         }
@@ -52,12 +52,12 @@ class TimesController {
     async delete(request, response) {
         try {
             const { id } = request.body
-            const jogador = await prisma.jogador.delete({
+            const times = await prisma.times.delete({
                 where: {
                     id: id
                 }
             })
-            response.json(jogador)
+            response.json(times)
         } catch {
             return response.status(409).send()
 
