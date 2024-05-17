@@ -1,3 +1,7 @@
+const { PrismaClient } = require("@prisma/client")
+
+const prisma = new PrismaClient()
+
 class JogadorController {
 
     async create(request, response) {
@@ -5,10 +9,10 @@ class JogadorController {
             const { nome,posicao,idade,nacionalidade } = request.body
             const jogador = await prisma.jogador.create({
                 data: {
-                    nome: nome,
-                    posicao: posicao,
-                    idade: idade,
-                    nacionalidade: nacionalidade
+                    nome,
+                    posicao,
+                    idade,
+                    nacionalidade
                 }
             })
             response.json(jogador)
@@ -34,25 +38,31 @@ class JogadorController {
 
     async MostrarTodos(request, response) {
         try {
-            const jogador = await prisma.jogador.MostrarTodos({})
+            const jogador = await prisma.jogador.findMany({})
             response.json(jogador)
         } catch {
             return response.status(409).send()
         }
     }
 
-    async delete(request, response) {
+    async update(request, response) {
         try {
-            const { id } = request.body
-            const jogador = await prisma.jogador.delete({
+            const {id, nome,posicao,idade,nacionalidade } = request.body
+            const jogador = await prisma.jogador.update({
                 where: {
                     id: id
+                },
+                data: {
+                    nome,
+                    posicao,
+                    idade,
+                    nacionalidade
+
                 }
             })
             response.json(jogador)
-        } catch {
+        } catch (err) {
             return response.status(409).send()
-
         }
     }
 }

@@ -1,6 +1,6 @@
 const { Router } = require('express')
 
-const JogadorController = require('../controller/jogadorController')
+const JogadorController = require('../controller/JogadorController')
 
 const jogadorRotas = Router()
 

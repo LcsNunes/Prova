@@ -1,3 +1,7 @@
+const { PrismaClient } = require("@prisma/client")
+
+const prisma = new PrismaClient()
+
 class TimesController {
 
     async create(request, response) {
@@ -7,12 +11,12 @@ class TimesController {
                 data: {
                     
                 nome,
-                anoDeFundacao, 
+                anoDeFundacao,
                 pais,
-                tecnico 
+                tecnico
                 }
             })
-            response.json(jogador)
+            response.json(times)
         } catch (err) {
             return response.status(409).send()
         }
@@ -21,20 +25,20 @@ class TimesController {
 
     async update(request, response) {
         try {
-            const { id, nome, anoDeFundacao, tecnico } = request.body
+            const { id, nome, anoDeFundacao, pais, tecnico } = request.body
             const times = await prisma.times.update({
                 where: {
                     id: id
                 },
                 data: {
-                    nome,
-                    anoDeFundacao, 
-                    pais,
-                    tecnico
+                nome,
+                anoDeFundacao,
+                pais,
+                tecnico
 
                 }
             })
-            response.json(user)
+            response.json(times)
         } catch (err) {
             return response.status(409).send()
         }
@@ -42,7 +46,7 @@ class TimesController {
 
     async MostrarTodos(request, response) {
         try {
-            const times = await prisma.times.MostrarTodos({})
+            const times = await prisma.times.findMany({})
             response.json(times)
         } catch {
             return response.status(409).send()
